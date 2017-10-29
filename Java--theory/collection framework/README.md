@@ -7,15 +7,15 @@
 
 상속한 구현 클래스를 통하여 다수의 데이터를 목적에 따라 사용할 수 있게 해줍니다.
 
+- [List](#List)
+- [Stack & Queue](#Stack)
+
+
 
 
 ## List
 
 `List` 는 순서가 있는 데이터의 집합이며, 데이터의 중복을 허용합니다. 
-
-
-
-
 
 ### ArrayList
 
@@ -55,7 +55,6 @@ public class Main {
         int arrayValue = (int) list2.get(2); // get을 통해 특정 index의 원소를 꺼낼 수 있습니다.
     }
 }
-
 ```
 
 
@@ -99,3 +98,55 @@ public class Main {
 Data가 많을수록 접근시간이 길어지기 때문에, 공간적 효율성과 시간적 효율성등을 자세히 파악하여 둘 중 유용한 
 
 것을 쓰는 것이 좋다. 
+
+
+
+### Stack
+
+ Java에서 제공하는 `Stack` Class 또한, 자료구조의 `Stack`과 유사한 LIFO 
+
+(Last - In - First - Out)으로 되어있는 클래스이며, 사용방법도 자료구조의 `Stack`과 유사하다고 생각하면 된다.
+
+```java
+  public static void main(String[] args) {
+        Stack stack = new Stack();
+        // 새로운 Stack 구현체를 생성합니다.
+        for(int i=0;i<10;i++)
+            stack.push(i);
+        // push를 통해 값을 넣을 수 있습니다.
+        while(!stack.empty()){
+                System.out.println(stack.pop());
+        } // pop을 통해 값을 꺼낼수 있으며, LIFO방식으로 마지막 입력값이 먼저 출력된다.
+        // ex) 9,8,7,6,5,4,3,2,1,0
+    }
+```
+
+
+
+### Queue
+
+Java에서 제공하는 `Queue` Class 또한, 자료구조의 `Queue`과 유사한 
+
+FIFO (First - In - First - Out)으로 되어있는 클래스이며, 사용방법도 자료구조의 `Stack`과 유사하다고 생각하면 된다.
+
+JDK 1.5 버전 이후로는 `LinkedList`를 통해 `Queue` 함수의 구현체로 사용합니다.
+
+```java
+  public static void main(String[] args) {
+        Queue queue = new LinkedList();
+        // 새로운 Queue 구현체를 생성합니다.
+        // Q : Queue는 LinkedList로 구현을 하느냐
+        // A : Queue는 Java에서 Interface만 정의되어 있음
+        // A : 구현체는 LinkedList로 하고 있다.
+        for(int i=0;i<10;i++)
+            queue.offer(i);
+        // offer를 통해 값을 넣을 수 있습니다.
+        while(!queue.isEmpty()){
+            System.out.println(queue.poll());
+        } // poll을 통해 값을 꺼낼수 있으며, FIFO방식으로 처음 입력값이 먼저 출력된다.
+        // ex) 0,1,2,3,4,5,6,7,8,9
+    }
+```
+
+
+
