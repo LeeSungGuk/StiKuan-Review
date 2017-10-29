@@ -7,10 +7,6 @@
 
 상속한 구현 클래스를 통하여 다수의 데이터를 목적에 따라 사용할 수 있게 해줍니다.
 
-- [List](#List)
-- [Stack & Queue](#Stack)
-
-
 
 
 ## List
@@ -150,3 +146,97 @@ JDK 1.5 버전 이후로는 `LinkedList`를 통해 `Queue` 함수의 구현체�
 
 
 
+### Iterator
+
+컬렉션에 저장된 요소를 편하게 접근하고 보는데 사용되는 인터페이스이다. 
+
+`Iterator`는 `List` , `Set`에 정의되어 있으므로 `Map`을 제외하고서는 바로 사용 가능하다.
+
+```java
+    public static void main(String[] args) {
+        List list = new ArrayList();
+        // 크기가 0인 List를 생성
+        // List 생성한 이유는 LinkedList 코드로도 편하게 바꾸기 위함
+
+        for(int i=0;i<10;i++){
+            list.add(i);
+        }
+       
+        Iterator iterator = list.iterator();
+        // Iterator를 통해 Collection 요소 접근
+        while(iterator.hasNext()) // iterator 접근 요소가 남았는지 확인
+        {
+            System.out.println(iterator.next());
+            // 해당되는 다음 요소를 읽어옵니다. ( .next()를 통해 )
+            iterator.remove(); // remove를 통해 next를 읽어온 요소를 삭제 가능하다.
+        }
+        System.out.println("List : " + list);
+        // iterator를 통해 remove를 하면 원본 리스트 속의 값이 삭제됨을 알 수 있다.
+        // ex) List : []
+    }
+```
+
+
+
+### Arrays
+
+`Arrays` 클래스는 배열을 다르게 유용한 함수들이 정의되어있고, 
+
+배열의 복사(`copyOf()`, `copyOfRange()`) , 정렬 (`sort()`) , 검색 (`binarysearch()`)등의 함수가 정의되어 있다.
+
+또한, `List` 의 값을 `Arrays`를 이용하여  생성할 수 있다.
+
+
+
+```java
+ public static void main(String[] args) {
+
+        int[] arr = {13,21,45,23,48,67,44,89,9,100};
+        // 크기가 10인 임의의 배열 생성
+        int[] arr2 = Arrays.copyOf(arr,3) ;
+        // Arrays.CopyOf를 통해 일부 요소를 복사하여 생성 할 수 있습니다.
+        Arrays.sort(arr); // sort()를 통해 배열의 요소를 정렬할 수 있습니다.
+        System.out.println(Arrays.toString(arr));
+        // sort 함수 이후 정렬된 값을 볼 수 있다.
+        // ex) [9, 13, 21, 23, 44, 45, 48, 67, 89, 100]
+        // toString을 하지 않으면 이상한 문자와 숫자의 조합을 볼 수 있다.
+        int[] arr3 = new int[4];
+        Arrays.fill(arr3,4); // fill을 통해 전체 요소를 채울 수 있다.
+        List list = Arrays.asList(new int[]{1,2,3,4});
+        // 배열을 통해 List의 값을 받을 수 있다. 단 크기가 변경이 불가능하므로 바꾸기 위해서는
+        List<Integer> list5 = new ArrayList<>(Arrays.asList(1,2,3,4));
+        // 새로운 ArrayList 등을 생성하여 값을 넣어줄 수 있도록 한다.
+
+    }
+```
+
+
+
+### List에 있는 문자열을 쉽게 정렬하는 법
+
+`Collections`를 이용하면 쉽게 Sort 할수 있으며, 다른 기준에 따라 정렬하고자 하는 경우는 `Comparator`를 
+
+상속받아 직접 구현해야 한다.
+
+```java
+ public static void main(String[] args) {
+        ArrayList arrayList = new ArrayList(5);
+        String[] Test = new String[]{"zoo", "yahoo", "xyz", "abcd", "bear"};
+        for(int i=0;i<5;i++){
+            arrayList.add(i,Test[i]);
+        }
+        Collections.sort(arrayList); 
+        // ArrayList 등의 List 형태의 문자는 Collection.sort()를 사용한다.
+        // 알파벳 순으로 정렬이 가능하다.
+        System.out.println("List : " + arrayList);
+        // List : [abcd, bear, xyz, yahoo, zoo] 
+    }
+```
+
+## Set
+
+`Set` 은 순서를 유지하지 않은 데이터의 집합이며, 데이터의 중복을 허용하지 않습니다.
+
+### HashSet 
+
+`HashSet`은 새로운 요소를 추가하며, 중복된 요소를 추가했을 시에는 false 를 반환하고, 저장되는 순서는 정렬 되어 있지 않습니다.
