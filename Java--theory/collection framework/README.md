@@ -240,3 +240,105 @@ JDK 1.5 버전 이후로는 `LinkedList`를 통해 `Queue` 함수의 구현체�
 ### HashSet 
 
 `HashSet`은 새로운 요소를 추가하며, 중복된 요소를 추가했을 시에는 false 를 반환하고, 저장되는 순서는 정렬 되어 있지 않습니다.
+
+```java
+    public static void main(String[] args) {
+        String[] strings = new String[]{"1","2","6","2","3","4","5","4"};
+        HashSet set = new HashSet();
+        // 새로운 Hashset 객체를 생성한다.
+        for(int i=0;i<strings.length;i++){
+            set.add(strings[i]);
+        } // HashSet 객체에 값을 add 한다.
+        System.out.println("HashSet : " + set);
+        // 중복된 값을 배제한 나머지 값이 들어가 있음을 알 수 있다.
+        // ex) HashSet : [1, 2, 3, 4, 5, 6] ( 순서는 Random)
+    }
+```
+
+### LinkedHashSet
+
+`HashSet` 과의 차이는 중복을 제거하지만, 저장한 순서를 유지한 채로 값을 입력하는 것이 차이점이 있습니다.
+
+```java
+    public static void main(String[] args) {
+        String[] strings = new String[]{"1","2","6","2","3","4","5","4"};
+        LinkedHashSet set = new LinkedHashSet();
+        // 새로운 LinkedHashset 객체를 생성한다.
+        for(int i=0;i<strings.length;i++){
+            set.add(strings[i]);
+        } // LinkedHashSet 객체에 값을 add 한다.
+        System.out.println("HashSet : " + set);
+        // 중복된 값을 배제한 나머지 값이 들어가 있음을 알 수 있다.
+        // ex) HashSet : [1, 2, 6, 3, 4, 5] ( LinkedHashSet은 입력 순서대로 저장한다. )
+    }
+```
+
+### TreeSet
+
+`TreeSet`은 이진 검색 트리 (binary search tree) 의 자료구조로 데이터를 저장하는 클래스입니다. 
+
+`TreeSet`은 Red-Black Tree로 구현이 되어있다. 
+
+```java
+   public static void main(String[] args) {
+       TreeSet treeset = new TreeSet();
+       // 새로운 Treeset 객체를 만들고 값을 add()를 통해 삽입한다.
+       for(int i=0;treeset.size()<6;i++){
+           treeset.add(i);
+       }
+       // treeset은 값이 입력될때 자동으로 정렬되서 저장된다.
+       System.out.println(treeset);
+       System.out.println(treeset.headSet(3));
+       System.out.println(treeset.tailSet(3));
+       // headset과 tailset을 이용하여 기준 값보다 크거나, 작은 객체를 반환할 수 있습니다.
+    }
+```
+
+
+
+## Map
+
+`Map`은 키(key)와 값(value) 으로 이루어진 데이터의 집합이며, key를 입력하여 value를 찾습니다.
+
+
+
+### HashMap
+
+`HashMap`은 key와 value를 입력하고, key 입력시 value를 찾아내는 것이다. 
+
+`HashMap`에서 key는 중복이 허용되지 않는다.
+
+```java
+     public static void main(String[] args) {
+       HashMap map = new HashMap();
+       // HashMap 객체를 생성한다.
+        map.put("Test1", 123);
+        map.put("Test2", 234);
+        map.put("Test3", "Hi");
+       //put을 통해 key와 value를 입력한다.
+
+        System.out.println(map.get("Test3"));
+        // key를 입력하여 get함수의 결과로 value가 나온다.
+        // ex) "Hi"
+        System.out.println(map.keySet());
+        System.out.println(map.entrySet());
+        System.out.println(map.values());
+        // keySet ex) [Test1, Test3, Test2] - key만 반환
+        // entrySet ex) [Test1=123, Test3=Hi, Test2=234] - key + value 반환
+        // values ex) [123, Hi, 234] - value 반환 
+        // 이렇게 분리시 Iterator 사용 가능
+    }
+```
+
+### TreeMap
+
+`TreeMap`은 이진 탐색 트리의 형태로 키와 값으로 이루어진 데이터를 저장한다.
+
+`HashMap`보다 범위검색, 정렬에 유용하지만 대부분은 `HashMap`이 유용하다.
+
+
+
+### Collections
+
+`Collections`는 컬렉션 ( `List, Set` ) 과 관련된 메소드를 제공하며, `fill() , copy() , sort()` 등의 함수도 Arrays 처럼 제공이 됩니다.
+
