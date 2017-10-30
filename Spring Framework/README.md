@@ -5,7 +5,11 @@
 
 Spring의 용도는 동적인 웹 사이트 개발을 위한 것입니다.
 
+[Maven](#Maven)
 
+[DI(Dependency Injection) ](#DI(Dependency Injection) )
+
+[@Autowired Annotation](#@Autowired Annotation)
 
 ## Maven
 
@@ -132,4 +136,18 @@ public class Test{
   }
 }    
 ```
+
+
+
+### DI를 하는 이유
+
+DI를 사용하는 이유는 코드의 재사용성이 높고, 유지보수를 할 시 간편하게 사용할 수 있습니다.
+
+(xml에서의 `bean`만을 수정하느냐, 전체 코드를 수정하느냐를 생각해보자...)
+
+
+
+### @Autowired Annotation
+
+### 
 
