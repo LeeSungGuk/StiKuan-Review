@@ -156,5 +156,68 @@ DI를 사용하는 이유는 코드의 재사용성이 높고, 유지보수를 �
 
 ## Autowired Annotation
 
-## 
+`@Autowired` 는 get,set을 입력하지 않아도 자동으로 의존 객체가 주입되게 해주는 Annotation입니다.  즉 , 자동으로 Property를 찾아서 주입해 줍니다.
 
+`@Override` 는 추상클래스에서 구현하지 않은 메소드를 구현할 때 쓰는 Annotation으로서, Service -> ServiceImpl 인 구현체쪽에서 많이 씁니다.
+
+`@Resource` 는 필드나 메서드에 적용시켜 빈의 이름을 사용하여 주입하는 빈 객체를 찾아 넣습니다.
+
+`@Autowired`는 type을 이용하며, `@Resourece`는 (name="이름")으로 주입할 객체를 넣는다.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+// xmlns:context를 설정함으로서 @AutoWired 사용이 가능합니다.
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+            
+    // Context를 통해 @Autowired가 사용가능합니다.        
+    <context:annotation-config/>       
+
+    <bean id="Test" class="com.java.ex.Test">
+   		
+    </bean>
+  <bean id="myTest" class="com.java.ex.MyTest">
+  	<property name="first" value="10"></property>
+  	<property name="second" value="2"></property>
+  </bean> 
+  
+            
+</beans>
+```
+
+```java
+public class MyTest {
+	Test test;
+	private int first;
+	private int second;
+	
+  // @Autowired를 통해 test에 있는 property를 자동 주입해 줍니다.
+	@Autowired 
+	public MyTest(Test test){
+		this.test = test;
+	}
+	public void add(){
+		test.add(first, second);
+	}
+	public void setTest(Test test){
+		this.test = test;
+	}
+	public void setFirst(int first){
+		this.first = first;
+	}
+	public void setSecond(int second){
+		this.second = second;
+	}
+
+}
+
+```
+
+[위로](#spring-framework)
+
+</br>
