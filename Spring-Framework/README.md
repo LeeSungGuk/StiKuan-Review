@@ -6,7 +6,11 @@
 Spring의 용도는 동적인 웹 사이트 개발을 위한 것입니다.
 
 * [Maven](#Maven)
-* [Autowired Annotation](#Autowired Annotation)
+
+* [DI](#didependency-injection)
+
+* [Autowired](#autowired-annotation)
+
   </br>  
 
 
@@ -26,7 +30,7 @@ Spring의 용도는 동적인 웹 사이트 개발을 위한 것입니다.
 	</dependency>
 ```
 
-[위로](#Spring Framework)
+[위로](#spring-framework)
 
 </br>
 
@@ -146,7 +150,7 @@ DI를 사용하는 이유는 코드의 재사용성이 높고, 유지보수를 �
 
 (xml에서의 `bean`만을 수정하느냐, 전체 코드를 수정하느냐를 생각해보자...)
 
-[위로](#Spring Framework)
+[위로](#spring-framework)
 
 </br>
 
