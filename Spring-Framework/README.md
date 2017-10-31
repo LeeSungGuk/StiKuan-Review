@@ -13,6 +13,10 @@ Spring의 용도는 동적인 웹 사이트 개발을 위한 것입니다.
 
 * AOP
 
+* XML 기반의 POJO (Plain Old Java Object) 클래스로 AOP 구현
+
+* @Aspect Annotation을 이용한 AOP 구현
+
   </br>  
 
 
@@ -267,6 +271,13 @@ public class MyTest {
 `PointCut`: JoinPoint의 부분으로 Advice가 적용된 부분
 `Weaving` : Advice를 핵심 기능에 적용 하는 것
 
+##### Advice 종류
+
+`Before` : Method 실행 전에 실행 
+`After-throwing` : Method 실행중 exception이 발생시 advice 실행
+`After`: Method 실행중 exception이 발생하여도 advice 실행
+`Around` : Method 전/후 exception 발생시 advice 실행
+
 ### Spring AOP 구현
 
 `Spring AOP`를 이용해서 공통 기능을 구현하고 적용하는 방법은
@@ -342,6 +353,97 @@ public class TimeAspect { // aspect 의존성이 있어야 합니다.
 ```
 
 이러한 작업을 하게 되면 그 이후 `bean`등록시 `AOP`가 구현되어 공통 기능을 사용할 수 있습니다.
+
+
+
+[위로](#spring-framework)
+
+
+
+### @Aspect Annotation을 이용한 AOP 구현
+
+
+
+Spring AOP는 `@Aspect` 를 통해서도 구현할 수 있으며, `@Aspect` , `@PointCut` 등의 `Annotation`을 통해 xml 설정 을 간단하게 해주면 AOP가 적용됩니다.
+
+
+
+XML 파일에는 이러한 설정을 입력 해 줍니다. 
+
+```xml
+<context:annotation-config/> 
+<aop:aspectj-autoproxy/>      // aspect @annotation을 사용하여 AOP를 사용하기 위한 것입니다.
+<aop:config proxy-target-class="true"/>    
+// CGLIB는 코드 생성 라이브러리로서(Code Generator Library) 런타임에 동적으로 자바 클래스의 프록시를 생성해주는 기능을 제공하며, 이 방식으로 하기 위해 config 설정을 해줍니다.
+<bean id="TimeAspect" class="aspect.TimeAspect"></bean>
+<bean id="SetTest" class="com.java.ex.SetTest"></bean> 
+```
+
+
+`@Aspect` 를 적용할 클래스를 xml 대신 `@Annotation`을 이용하여 적용 시키며, 이러한 클래스를 통해 공통 기능을 사용 해 줄 수 있게 합니다.
+
+
+
+```java
+import java.util.Arrays;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+
+@Aspect
+public class TimeAspect { // aspect 의존성이 있어야 합니다.
+	// execution은 (returntype , package . class . method . any type number of arguments )
+	@Pointcut("execution(* com.java.ex.*.*(..))")
+	private void point() {
+	}
+   // 메서드 실행 전/ 후 exception 발생 했으므로 Around advice 실행
+	@Around("point()")
+	public Object Time(ProceedingJoinPoint joinPoint) throws Throwable{
+		long start = System.currentTimeMillis();
+		try{ // Object는 객체를 받기 위해서 ...
+			Object result = joinPoint.proceed(); // proceed를 호출하면 대상 객체 메서드가 실행
+			return result;
+		}finally{
+			long finish = System.currentTimeMillis();
+			Signature sig = joinPoint.getSignature();
+			//메서드의 시그니처, 객체 , 대상과 함꼐 소요시간을 나타냄
+			System.out.printf("%s.%s(%s) 실행시간  %d ms\n", 
+					joinPoint.getTarget().getClass().getSimpleName(),sig.getName(),
+					Arrays.toString(joinPoint.getArgs()),(finish-start));
+		} // 메소드 시작시간 - 끝 시간 계산.
+	}
+
+}
+
+```
+
+```java
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		
+		GenericXmlApplicationContext ctx = 
+          new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+		// XML 파일을 검색해서 나온 bean object 검색 시 사용 ( getBean )
+		SetTest myTest = ctx.getBean("SetTest",SetTest.class);
+		long test = myTest.test(5);
+		System.out.println("MyTest:" + test);
+	}
+
+}
+
+```
+
+
+
+이처럼 Annotation  또는 XML을 통해 AOP를 구현하여, 다른 클래스들이 공통적으로 써야 하는 기능을 
+
+실행해 주는 역할을 합니다.
 
 
 
