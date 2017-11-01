@@ -43,3 +43,57 @@ Annotation을 너어주면, 컴파일러가 Annotation을 확인하고 옳지 �
 상당히 유용하게 소스코드의 구조나 타겟의 연결을 편하게 관리해 줄 수 있는 도구입니다.
 
 `Metadata` : Data를 설명해 주는 Data라고 간단히 생각하시면 됩니다.
+
+
+
+### 표준 Annotation
+
+`@Override` : 컴파일러에게 오버라이딩한 함수라는 것을 알려줍니다.
+
+ 
+
+```java
+class Parent{
+    public void Method(){
+        System.out.println("Parent Class Mehthod");
+    }
+}
+class Child extends  Parent{
+    @Override // 해당되는 함수가 Overriding 되었다는 것을 알려준다.
+    public void Method(){
+        System.out.println("Child Class Mehthod");
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Child child = new Child(); // 자식 클래스 생성
+        child.Method(); // ex) Child Class Mehthod
+    }
+}
+
+
+```
+
+`@Deprecated` : 더 이상 사용되지 않는 필드나 메서드에 붙여서, 다른 것으로 대체되었으니 더 이상 사용하지 않는 것을 권유한다.
+
+```java
+class Parent{
+    @Deprecated
+    public void Method(){
+        System.out.println("Parent Class Mehthod");
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        Parent parent = new Parent();
+        parent.Method(); /* 사용하지 않는 @Deprecated를 쓸때에는 Method 함수에 줄이 그어지며, 
+                            컴파일 결과로 Deprecated API라고 출력되기도 합니다.*/
+    }
+}
+
+```
+
+그 외에도 `@SuppressWarnings` , `@Native`, `@FunctionalInterface` 등의 Annotation 등이 있습니다.
